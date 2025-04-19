@@ -1,12 +1,31 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import CameraView from '@/components/CameraView';
+import RecordButton from '@/components/RecordButton';
+import ResponseBox from '@/components/ResponseBox';
 
 const Index = () => {
+  const [response, setResponse] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleRecordingComplete = async (audioBlob: Blob) => {
+    setIsLoading(true);
+    // Here you would implement the logic to:
+    // 1. Send the audio recording to speech-to-text
+    // 2. Process the camera feed with computer vision
+    // 3. Generate a response
+    // For now, we'll just show a placeholder response
+    setTimeout(() => {
+      setResponse("I can see what appears to be your surroundings. Feel free to ask specific questions about what you see.");
+      setIsLoading(false);
+    }, 1500);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="fixed inset-0 bg-slate-900">
+      <CameraView />
+      <RecordButton onRecordingComplete={handleRecordingComplete} />
+      <ResponseBox text={response} isLoading={isLoading} />
     </div>
   );
 };
